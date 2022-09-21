@@ -1,0 +1,8 @@
+// Top 5 most popular commentaries
+db.reviews.find().sort({thumbsUpCount: -1}).limit(5)
+
+// Records with length of 'content' field less than 5 chars
+db.reviews.find({'$expr': {'$lt': [{'$strLenCP': '$content'}, 5]}})
+
+// Average rating by each day (timestamp)
+db.reviews.aggregate({'$group': {_id: '$at', averageQuantity: {$avg: '$thumbsUpCount'}}})
